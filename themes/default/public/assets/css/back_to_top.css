@@ -1,0 +1,12 @@
+.custom-style{
+background-color:#bfbdb6!important;
+color:#ffffff!important;
+}
+.custom-style:hover{
+color:#00ff11!important;
+background-color:#00ff4c!important;
+}
+@media (max-width:575px){
+.custom-style{
+display:none !important;
+}}

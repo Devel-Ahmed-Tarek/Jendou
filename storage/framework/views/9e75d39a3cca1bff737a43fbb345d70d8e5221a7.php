@@ -1,0 +1,119 @@
+<div class="card">
+    <div class="card-body">
+        <div class="form-row mb-20">
+            <div class="col-sm-6">
+                <label class="font-14 bold black "><?php echo e(translate('Enable product reviews')); ?>
+
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="switch glow primary medium">
+                    <input type="checkbox" name="enable_product_reviews" class="enable-product-review"
+                        <?php if(getEcommerceSetting('enable_product_reviews') == config('settings.general_status.active')): ?> checked <?php endif; ?>>
+                    <span class="control"></span>
+                </label>
+            </div>
+        </div>
+        <div
+            class="product-review-setting-group <?php echo e(getEcommerceSetting('enable_product_reviews') == config('settings.general_status.active') ? '' : 'd-none'); ?>">
+            <div class="form-row mb-20">
+                <div class="col-sm-6">
+                    <label class="font-14 bold black "><?php echo e(translate('Enable star rating on product reviews')); ?>
+
+                    </label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="switch glow primary medium">
+                        <input type="checkbox" name="enable_product_star_rating"
+                            <?php if(getEcommerceSetting('enable_product_star_rating') == config('settings.general_status.active')): ?> checked <?php endif; ?>>
+                        <span class="control"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-row mb-20">
+                <div class="col-sm-6">
+                    <label class="font-14 bold black "><?php echo e(translate('Star rating should be required not optional')); ?>
+
+                    </label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="switch glow primary medium">
+                        <input type="checkbox" name="required_product_star_rating"
+                            <?php if(getEcommerceSetting('required_product_star_rating') == config('settings.general_status.active')): ?> checked <?php endif; ?>>
+                        <span class="control"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-row mb-20">
+                <div class="col-sm-6">
+                    <label
+                        class="font-14 bold black "><?php echo e(translate('Show Verified customer label on product reviews')); ?>
+
+                    </label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="switch glow primary medium">
+                        <input type="checkbox" name="verified_customer_on_product_review"
+                            <?php if(getEcommerceSetting('verified_customer_on_product_review') == config('settings.general_status.active')): ?> checked <?php endif; ?>>
+                        <span class="control"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-row mb-20">
+                <div class="col-sm-6">
+                    <label class="font-14 bold black "><?php echo e(translate('Reviews can only be left by verified customer')); ?>
+
+                    </label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="switch glow primary medium">
+                        <input type="checkbox" name="only_varified_customer_left_review"
+                            <?php if(getEcommerceSetting('only_varified_customer_left_review') == config('settings.general_status.active')): ?> checked <?php endif; ?>>
+                        <span class="control"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="form-row mb-20">
+            <div class="col-sm-6">
+                <label class="font-14 bold black "><?php echo e(translate('Enable product compare')); ?>
+
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="switch glow primary medium">
+                    <input type="checkbox" name="enable_product_compare"
+                        <?php if(getEcommerceSetting('enable_product_compare') == config('settings.general_status.active')): ?> checked <?php endif; ?>>
+                    <span class="control"></span>
+                </label>
+            </div>
+        </div>
+        <div class="form-row mb-20">
+            <div class="col-sm-6">
+                <label class="font-14 bold black "><?php echo e(translate('Enable Product Discount')); ?>
+
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="switch glow primary medium">
+                    <input type="checkbox" name="enable_product_discount"
+                        <?php if(getEcommerceSetting('enable_product_discount') == config('settings.general_status.active')): ?> checked <?php endif; ?>>
+                    <span class="control"></span>
+                </label>
+            </div>
+        </div>
+        <div class="form-row mb-20">
+            <div class="col-sm-6">
+                <label class="font-14 bold black "><?php echo e(translate('Display product perpage')); ?>
+
+                </label>
+            </div>
+            <div class="col-sm-4">
+                <input type="text" name="product_per_page" class="theme-input-style"
+                    value="<?php echo e(getEcommerceSetting('product_per_page')); ?>">
+            </div>
+        </div>
+    </div>
+</div>
+<?php /**PATH /var/www/tl-commerce-saas/tlcommercesaas/plugins/tlecommercecore/views/ecommerce-settings/products.blade.php ENDPATH**/ ?>

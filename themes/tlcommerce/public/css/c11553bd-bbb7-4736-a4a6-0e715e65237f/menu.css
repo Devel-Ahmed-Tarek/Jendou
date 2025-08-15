@@ -1,0 +1,24 @@
+.custom-menu{
+color:#6045e2!important;
+}
+.custom-menu:hover{
+color:#d9e61e!important;
+}
+.submenu .custom-menu{
+color:#242424!important;
+}
+.megamenu .custom-menu{
+color:#242424!important;
+}
+.my-account-dropdown .custom-menu{
+color:#242424!important;
+}
+.submenu .custom-menu:hover{
+color:#dfe222!important;
+}
+.megamenu .custom-menu:hover{
+color:#dfe222!important;
+}
+.my-account-dropdown .custom-menu:hover{
+color:#dfe222!important;
+}

@@ -1,0 +1,37 @@
+.custom-header-top-bar{
+background-color:#faf5f8!important;
+}
+.offcanvas-wrapper .custom-offcanvas-header{
+background-color:#8e4852!important;
+}
+.custom-header-mid.c1-bg{
+background-color:#8e4852!important;
+}
+.custom-mobile-header.c1-bg{
+background-color:#8e4852!important;
+}
+.custom-header-bottom{
+color:#100f0f!important;
+}
+.custom-header-bottom .email-text{
+color:#100f0f!important;
+}
+.custom-search-btn{
+background-color:#0a0a0a!important;
+}
+.custom-icon-btn .material-icons{
+color:#0a0a0a!important;
+}
+.custom-search-btn-mobile svg{
+color:#0a0a0a!important;
+}
+.custom-icon-btn:hover{
+background-color:#827d7d!important;
+}
+.custom-lang-switch-btn{
+background-color:#121212!important;
+color:#030202!important;
+}
+.custom-lang-switch-btn:hover{
+background-color:#0a0a0a!important;
+}
