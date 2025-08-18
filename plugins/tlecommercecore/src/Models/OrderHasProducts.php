@@ -22,6 +22,7 @@ class OrderHasProducts extends Model
         parent::boot();
 
         OrderHasProducts::observe(SellerEarningObserver::class);
+        OrderHasProducts::observe(\Plugin\TlcommerceCore\Observer\ShippingIntegrationObserver::class);
     }
 
     public function order()

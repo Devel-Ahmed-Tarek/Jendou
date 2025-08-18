@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 use Composer\Autoload\ClassLoader;
@@ -12,7 +11,8 @@ class PluginServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register() {}
+    public function register()
+    {}
 
     /**
      * Bootstrap services.
@@ -42,7 +42,7 @@ class PluginServiceProvider extends ServiceProvider
         //Load helper
         $has_helpers = file_exists(base_path('plugins/' . $plugin->location . '/helpers/helpers.php'));
         if ($has_helpers) {
-            require_once(base_path('plugins/' . $plugin->location . '/helpers/helpers.php'));
+            require_once base_path('plugins/' . $plugin->location . '/helpers/helpers.php');
         }
         //Load view
         $this->loadViewsFrom(base_path('plugins/' . $plugin->location . '/views'), 'plugin/' . $plugin->location);
@@ -51,5 +51,10 @@ class PluginServiceProvider extends ServiceProvider
         $loader = new ClassLoader;
         $loader->setPsr4($plugin->namespace, base_path('plugins/' . $plugin->location . '/src'));
         $loader->register(true);
+
+        // Register plugin-specific service providers
+        if ($plugin->location === 'tlecommercecore') {
+            $this->app->register(\Plugin\TlcommerceCore\Providers\ShippingIntegrationServiceProvider::class);
+        }
     }
 }

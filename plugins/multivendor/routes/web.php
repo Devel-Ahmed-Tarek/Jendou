@@ -1,23 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Plugin\Multivendor\Http\Controllers\Seller\AuthController;
-use Plugin\Multivendor\Http\Controllers\Seller\ShopController;
-use Plugin\Multivendor\Http\Controllers\Seller\OrderController;
+use Plugin\Multivendor\Http\Controllers\Admin\OrderController as AdminOrderController;
 use Plugin\Multivendor\Http\Controllers\Admin\PaymentController;
+use Plugin\Multivendor\Http\Controllers\Admin\ProductController as AdminProductController;
+use Plugin\Multivendor\Http\Controllers\Admin\SellerController as AdminSellerController;
+use Plugin\Multivendor\Http\Controllers\Admin\SettingsController;
+use Plugin\Multivendor\Http\Controllers\Seller\AuthController;
+use Plugin\Multivendor\Http\Controllers\Seller\DashboardController;
+use Plugin\Multivendor\Http\Controllers\Seller\EarningController;
+use Plugin\Multivendor\Http\Controllers\Seller\OrderController;
+use Plugin\Multivendor\Http\Controllers\Seller\ProductController;
 use Plugin\Multivendor\Http\Controllers\Seller\RefundController;
 use Plugin\Multivendor\Http\Controllers\Seller\ReviewController;
-use Plugin\Multivendor\Http\Controllers\Admin\SettingsController;
-use Plugin\Multivendor\Http\Controllers\Seller\EarningController;
-use Plugin\Multivendor\Http\Controllers\Seller\ProductController;
-use Plugin\Multivendor\Http\Controllers\Seller\DashboardController;
-use Plugin\Multivendor\Http\Controllers\Admin\OrderController as AdminOrderController;
-use Plugin\Multivendor\Http\Controllers\Admin\SellerController as AdminSellerController;
-use Plugin\Multivendor\Http\Controllers\Admin\ProductController as AdminProductController;
+use Plugin\Multivendor\Http\Controllers\Seller\ShopController;
 
 /**
  * Admin  panel Routes
- * 
+ *
  */
 Route::group(['prefix' => getAdminPrefix(), 'middleware' => 'auth'], function () {
 
@@ -67,7 +67,6 @@ Route::group(['prefix' => getAdminPrefix(), 'middleware' => 'auth'], function ()
         Route::post('/update-seller-settings', [SettingsController::class, 'sellerSettingsUpdate'])->name('plugin.multivendor.admin.seller.settings.update');
     });
 });
-
 
 Route::group(['prefix' => 'seller'], function () {
 
@@ -145,5 +144,18 @@ Route::group(['prefix' => 'seller'], function () {
         Route::get('payout-settings', [EarningController::class, 'payoutSettings'])->name('plugin.multivendor.seller.dashboard.earning.payout.settings');
         Route::post('update-payout-settings', [EarningController::class, 'updatePayoutSettings'])->name('plugin.multivendor.seller.dashboard.earning.payout.settings.update');
         Route::get('earning', [EarningController::class, 'sellerEarnings'])->name('plugin.multivendor.seller.dashboard.earning.history');
+
+        /**
+         * Shipping Carriers
+         */
+        Route::get('shipping-carriers', [\Plugin\Multivendor\Http\Controllers\Seller\ShippingCarrierController::class, 'carriers'])->name('plugin.multivendor.seller.dashboard.shipping.carriers');
+        Route::post('activate-carrier', [\Plugin\Multivendor\Http\Controllers\Seller\ShippingCarrierController::class, 'activateCarrier'])->name('plugin.multivendor.seller.dashboard.shipping.carriers.activate');
+        Route::post('update-carrier-settings', [\Plugin\Multivendor\Http\Controllers\Seller\ShippingCarrierController::class, 'updateCarrierSettings'])->name('plugin.multivendor.seller.dashboard.shipping.carriers.update');
+        Route::post('deactivate-carrier', [\Plugin\Multivendor\Http\Controllers\Seller\ShippingCarrierController::class, 'deactivateCarrier'])->name('plugin.multivendor.seller.dashboard.shipping.carriers.deactivate');
+        Route::post('delete-carrier', [\Plugin\Multivendor\Http\Controllers\Seller\ShippingCarrierController::class, 'deleteCarrier'])->name('plugin.multivendor.seller.dashboard.shipping.carriers.delete');
+        Route::post('calculate-shipping-cost', [\Plugin\Multivendor\Http\Controllers\Seller\ShippingCarrierController::class, 'calculateShippingCost'])->name('plugin.multivendor.seller.dashboard.shipping.carriers.calculate');
+        Route::post('get-carrier-info', [\Plugin\Multivendor\Http\Controllers\Seller\ShippingCarrierController::class, 'getCarrierInfo'])->name('plugin.multivendor.seller.dashboard.shipping.carriers.info');
+        Route::get('get-carrier-stats', [\Plugin\Multivendor\Http\Controllers\Seller\ShippingCarrierController::class, 'getCarrierStats'])->name('plugin.multivendor.seller.dashboard.shipping.carriers.stats');
+        Route::post('test-api-connection', [\Plugin\Multivendor\Http\Controllers\Seller\ShippingCarrierController::class, 'testApiConnection'])->name('plugin.multivendor.seller.dashboard.shipping.carriers.test-api');
     });
 });

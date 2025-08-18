@@ -2,8 +2,6 @@
 namespace Plugin\TlcommerceCore\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Plugin\TlcommerceCore\Models\OrderHasProducts;
-use Plugin\TlcommerceCore\Observer\ShippingIntegrationObserver;
 use Plugin\TlcommerceCore\Services\ArmexShippingService;
 
 class ShippingIntegrationServiceProvider extends ServiceProvider
@@ -27,9 +25,6 @@ class ShippingIntegrationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // تسجيل Observer
-        OrderHasProducts::observe(ShippingIntegrationObserver::class);
-
         // تحميل الإعدادات
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/armex.php', 'tlecommercecore.armex'

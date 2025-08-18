@@ -99,6 +99,13 @@
                     <span class="link-title">{{ translate('Shop Settings') }}</span>
                 </a>
             </li>
+            <li
+                class="{{ Request::routeIs(['plugin.multivendor.seller.dashboard.shipping.carriers']) ? 'active ' : '' }}">
+                <a href="{{ route('plugin.multivendor.seller.dashboard.shipping.carriers') }}">
+                    <i class="icofont-vehicle-delivery-van"></i>
+                    <span class="link-title">{{ translate('Shipping Carriers') }}</span>
+                </a>
+            </li>
         </ul>
     </div>
     <!-- End Sidebar -->
