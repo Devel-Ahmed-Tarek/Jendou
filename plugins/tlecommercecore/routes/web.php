@@ -1,36 +1,35 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Plugin\TlcommerceCore\Http\Controllers\TaxController;
-use Plugin\TlcommerceCore\Http\Controllers\UnitController;
 use Plugin\TlcommerceCore\Http\Controllers\BrandController;
-use Plugin\TlcommerceCore\Http\Controllers\ColorController;
-use Plugin\TlcommerceCore\Http\Controllers\OrderController;
-use Plugin\TlcommerceCore\Http\Controllers\ReportController;
-use Plugin\TlcommerceCore\Http\Controllers\ProductController;
 use Plugin\TlcommerceCore\Http\Controllers\CategoryController;
+use Plugin\TlcommerceCore\Http\Controllers\ColorController;
 use Plugin\TlcommerceCore\Http\Controllers\CurrencyController;
 use Plugin\TlcommerceCore\Http\Controllers\CustomerController;
 use Plugin\TlcommerceCore\Http\Controllers\LocationController;
-use Plugin\TlcommerceCore\Http\Controllers\SettingsController;
-use Plugin\TlcommerceCore\Http\Controllers\ShippingController;
-use \Plugin\TlcommerceCore\Http\Controllers\MarketingController;
-use Plugin\TlcommerceCore\Http\Controllers\ProductTagsController;
+use Plugin\TlcommerceCore\Http\Controllers\OrderController;
 use Plugin\TlcommerceCore\Http\Controllers\Payment\GpayController;
+use Plugin\TlcommerceCore\Http\Controllers\Payment\MercadoPagoController;
 use Plugin\TlcommerceCore\Http\Controllers\Payment\MollieController;
 use Plugin\TlcommerceCore\Http\Controllers\Payment\PaddleController;
+use Plugin\TlcommerceCore\Http\Controllers\Payment\PaymentController;
 use Plugin\TlcommerceCore\Http\Controllers\Payment\PaymobController;
 use Plugin\TlcommerceCore\Http\Controllers\Payment\PaypalController;
-use Plugin\TlcommerceCore\Http\Controllers\Payment\StripeController;
-use Plugin\TlcommerceCore\Http\Controllers\Payment\PaymentController;
 use Plugin\TlcommerceCore\Http\Controllers\Payment\PaystackController;
 use Plugin\TlcommerceCore\Http\Controllers\Payment\RazorpayController;
-use Plugin\TlcommerceCore\Http\Controllers\ProductAttributeController;
-use Plugin\TlcommerceCore\Http\Controllers\ProductConditionController;
-use Plugin\TlcommerceCore\Http\Controllers\ProductCollectionController;
 use Plugin\TlcommerceCore\Http\Controllers\Payment\SSLCommerzController;
-use Plugin\TlcommerceCore\Http\Controllers\Payment\MercadoPagoController;
+use Plugin\TlcommerceCore\Http\Controllers\Payment\StripeController;
+use Plugin\TlcommerceCore\Http\Controllers\ProductAttributeController;
+use Plugin\TlcommerceCore\Http\Controllers\ProductCollectionController;
+use Plugin\TlcommerceCore\Http\Controllers\ProductConditionController;
+use Plugin\TlcommerceCore\Http\Controllers\ProductController;
+use Plugin\TlcommerceCore\Http\Controllers\ProductTagsController;
+use Plugin\TlcommerceCore\Http\Controllers\ReportController;
+use Plugin\TlcommerceCore\Http\Controllers\SettingsController;
+use Plugin\TlcommerceCore\Http\Controllers\ShippingController;
+use Plugin\TlcommerceCore\Http\Controllers\TaxController;
+use Plugin\TlcommerceCore\Http\Controllers\UnitController;
+use \Plugin\TlcommerceCore\Http\Controllers\MarketingController;
 
 Route::group(['middleware' => 'auth', 'prefix' => getAdminPrefix()], function () {
 
@@ -106,7 +105,6 @@ Route::group(['middleware' => 'auth', 'prefix' => getAdminPrefix()], function ()
         Route::post('/update-product-tag', [ProductTagsController::class, 'updateTag'])->name('plugin.tlcommercecore.product.tags.update');
     });
 
-
     //Product Attribute module
     Route::middleware(['can:Manage Attributes'])->group(function () {
         Route::get('/product-attributes', [ProductAttributeController::class, 'productAttributes'])->name('plugin.tlcommercecore.product.attributes.list');
@@ -154,7 +152,6 @@ Route::group(['middleware' => 'auth', 'prefix' => getAdminPrefix()], function ()
     Route::get('/product-cod-countries-dropdown-options', [ProductController::class, 'codCountriesDropdownOptions'])->name('plugin.tlcommercecore.product.cod.countries.dropdown.option');
     Route::get('/product-cod-states-dropdown-options', [ProductController::class, 'codStateDropdownOptions'])->name('plugin.tlcommercecore.product.cod.state.dropdown.option');
     Route::get('/product-cod-cities-dropdown-options', [ProductController::class, 'codCityDropdownOptions'])->name('plugin.tlcommercecore.product.cod.city.dropdown.option');
-
 
     Route::middleware(['can:Manage Add New Product'])->group(function () {
         Route::get('/add-new-product', [ProductController::class, 'addNewProduct'])->name('plugin.tlcommercecore.product.add.new')->middleware('check.subscription');
@@ -233,8 +230,6 @@ Route::group(['middleware' => 'auth', 'prefix' => getAdminPrefix()], function ()
                 return view('plugin/tlecommercecore::shipping.configuration.carrier-shipping-weight-range');
             })->name('plugin.tlcommercecore.shipping.carrier.weight.range.input');
         });
-
-
 
         Route::middleware(['can:Manage Locations'])->group(function () {
             //countries module
@@ -327,8 +322,6 @@ Route::group(['middleware' => 'auth', 'prefix' => getAdminPrefix()], function ()
         Route::post('/print-shipping-label', [OrderController::class, 'printShippingLabel'])->name('plugin.tlcommercecore.orders.print.shipping.label');
         Route::post('/print-order-invoice', [OrderController::class, 'printInvoice'])->name('plugin.tlcommercecore.orders.print.invoice');
     });
-
-
 
     /**
      *Payments Module
@@ -445,3 +438,25 @@ Route::get('/payment/paymob-callback', [PaymobController::class, 'callback'])->n
 Route::get('/payment/mercadopago/success', [MercadoPagoController::class, 'success'])->name('mercadopago.payment.success.ecommerce');
 Route::get('/payment/mercadopago/failure', [MercadoPagoController::class, 'failure'])->name('mercadopago.payment.failure.ecommerce');
 Route::get('/payment/mercadopago/pending', [MercadoPagoController::class, 'pending'])->name('mercadopago.payment.pending.ecommerce');
+
+/**
+ * Shipping Integration Routes
+ */
+Route::group(['middleware' => 'auth', 'prefix' => getAdminPrefix()], function () {
+    Route::middleware(['can:Manage Shipping Integration'])->group(function () {
+        Route::get('/shipping-integrations', [\Plugin\TlcommerceCore\Http\Controllers\ShippingIntegrationController::class, 'index'])->name('plugin.tlcommercecore.shipping.integration.index');
+        Route::get('/shipping-integrations/{id}', [\Plugin\TlcommerceCore\Http\Controllers\ShippingIntegrationController::class, 'show'])->name('plugin.tlcommercecore.shipping.integration.show');
+        Route::post('/shipping-integrations/create', [\Plugin\TlcommerceCore\Http\Controllers\ShippingIntegrationController::class, 'createShipment'])->name('plugin.tlcommercecore.shipping.integration.create');
+        Route::post('/shipping-integrations/track', [\Plugin\TlcommerceCore\Http\Controllers\ShippingIntegrationController::class, 'trackShipment'])->name('plugin.tlcommercecore.shipping.integration.track');
+        Route::get('/shipping-integrations/print-label', [\Plugin\TlcommerceCore\Http\Controllers\ShippingIntegrationController::class, 'printLabel'])->name('plugin.tlcommercecore.shipping.integration.print');
+        Route::post('/shipping-integrations/cancel', [\Plugin\TlcommerceCore\Http\Controllers\ShippingIntegrationController::class, 'cancelShipment'])->name('plugin.tlcommercecore.shipping.integration.cancel');
+        Route::post('/shipping-integrations/{id}/retry', [\Plugin\TlcommerceCore\Http\Controllers\ShippingIntegrationController::class, 'retryShipment'])->name('plugin.tlcommercecore.shipping.integration.retry');
+    });
+});
+
+/**
+ * API Routes for Shipping Integration
+ */
+Route::prefix('api')->group(function () {
+    Route::post('/shipping/track', [\Plugin\TlcommerceCore\Http\Controllers\ShippingIntegrationController::class, 'apiTrackShipment'])->name('api.shipping.track');
+});

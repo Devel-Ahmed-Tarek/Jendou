@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
@@ -17,6 +16,9 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('send-subscription:notification')->everyMinute();
         $schedule->command('queue:work --stop-when-empty --delay=60')->withoutOverlapping()->everyMinute();
+
+        // Process failed shipments every hour
+        $schedule->command('shipping:retry-failed-shipments')->hourly();
     }
 
     /**

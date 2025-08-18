@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/aramex/create-shipment', [\Plugin\Carrier\Http\Controllers\AramexController::class, 'createShipment']);
+Route::get('/aramex/print-label/{shipmentNumber}', [\Plugin\Carrier\Http\Controllers\AramexController::class, 'printLabel']);
